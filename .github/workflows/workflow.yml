@@ -1,0 +1,37 @@
+name: CI Automated Testing
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout the repository code.
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Python using version 3 of the setup action.
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+
+      # Step 3: Run Test Case 1 - Multiple Numbers
+      - name: Run Test Case 1 - Multiple Numbers
+        run: |
+          python find_lowest_number.py test_data/test1_input.txt test_data/test1_output.txt
+          diff test_data/test1_output.txt test_data/test1_expected.txt
+
+      # Step 4: Run Test Case 2 - Single Number
+      - name: Run Test Case 2 - Single Number
+        run: |
+          python find_lowest_number.py test_data/test2_input.txt test_data/test2_output.txt
+          diff test_data/test2_output.txt test_data/test2_expected.txt
+
+      # Step 5: Run Test Case 3 - Blank File
+      - name: Run Test Case 3 - Blank File
+        run: |
+          python find_lowest_number.py test_data/test3_input.txt test_data/test3_output.txt
+          diff test_data/test3_output.txt test_data/test3_expected.txt
